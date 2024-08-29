@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: producer
-          image: ibrahimjamil/producer:latest
+          image: 182399717212.dkr.ecr.us-east-1.amazonaws.com/producer #ibrahimjamil/producer:latest
           envFrom:
             - secretRef:
                 name: producer-secret
