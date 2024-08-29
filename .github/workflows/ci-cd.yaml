@@ -96,17 +96,6 @@ jobs:
           tar -xzf eksctl_$PLATFORM.tar.gz -C /tmp
           sudo mv /tmp/eksctl /usr/local/bin
 
-      - name: Create EKS Cluster
-        run: |
-          eksctl create cluster \
-          --name pubsub-cluster \
-          --region ${{ secrets.AWS_REGION }} \
-          --version 1.30 \
-          --nodegroup-name ng-default \
-          --node-type t3.small \
-          --nodes 2 \
-          --managed
-
       - name: Install kubectl
         run: |
           curl -o kubectl https://amazon-eks.s3.us-west-2.amazonaws.com/1.19.6/2021-01-05/bin/linux/amd64/kubectl
@@ -119,8 +108,8 @@ jobs:
 
       - name: Deploy Producer to EKS
         run: |
-          kubectl apply -f ./k8s/producer-deployment.yml
+          kubectl apply -f ../k8s/producer-deployment.yml
 
       - name: Deploy Subscriber to EKS
         run: |
-          kubectl apply -f ./k8s/subscriber-deployment.yml
+          kubectl apply -f ../k8s/subscriber-deployment.yml
