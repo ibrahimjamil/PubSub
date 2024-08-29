@@ -1,0 +1,5 @@
+/producer/node_modules
+/subscriber/node_modules
+/node_modules
+/producer/.env
+/subscriber/.env

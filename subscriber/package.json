@@ -1,0 +1,16 @@
+{
+  "name": "subscriber",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@google-cloud/pubsub": "^4.7.0",
+    "aws-sdk": "^2.1685.0",
+    "dotenv": "^16.4.5"
+  }
+}
