@@ -28,6 +28,15 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_KEY }}
           AWS_REGION: ${{ secrets.AWS_REGION }}
 
+      - name: Create ECR repository for subscriber
+        run: |
+          aws ecr describe-repositories --repository-names subscriber || \
+          aws ecr create-repository --repository-name subscriber
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: ${{ secrets.AWS_REGION }}
+
       - name: Build Consumer Docker Image And Push To ECR
         run: |
           docker build \
@@ -38,6 +47,15 @@ jobs:
             --build-arg AWS_REGION=${{ secrets.AWS_REGION }} \
             -t ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/subscriber:latest ./subscriber
           docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/subscriber:latest
+
+      - name: Create ECR repository for producer
+        run: |
+          aws ecr describe-repositories --repository-names producer || \
+          aws ecr create-repository --repository-name producer
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: ${{ secrets.AWS_REGION }}
 
       - name: Build Producer Docker Image And Push To ECR
         run: |
