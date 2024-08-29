@@ -116,4 +116,4 @@ jobs:
       - name: Deploy Producer and Consumer to EKS
         run: |
           kubectl apply -f ./infra/producer-deployment.yaml
-          kubectl apply -f ./infra/consumer-deployment.yaml
+          kubectl apply -f ./infra/subscriber-deployment.yaml
