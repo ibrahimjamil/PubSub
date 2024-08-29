@@ -115,4 +115,4 @@ jobs:
 
       - name: Deploy Producer to EKS
         run: |
-          ./kubectl apply -k ./infra/
+          kubectl apply -k ./infra/
