@@ -106,6 +106,10 @@ jobs:
         run: |
           aws eks update-kubeconfig --region ${{ secrets.AWS_REGION }} --name pubsub-cluster
 
+      - name: List directory contents
+        run: |
+          ls -R ./infra/
+
       - name: Deploy Producer to EKS
         run: |
           kubectl apply -k ./infra/
