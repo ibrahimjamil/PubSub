@@ -108,8 +108,8 @@ jobs:
 
       - name: Deploy Producer to EKS
         run: |
-          kubectl apply -f ../../k8s/producer-deployment.yaml
+          kubectl apply -f k8s/producer-deployment.yaml
 
       - name: Deploy Subscriber to EKS
         run: |
-          kubectl apply -f ../../k8s/subscriber-deployment.yaml
+          kubectl apply -f k8s/subscriber-deployment.yaml
