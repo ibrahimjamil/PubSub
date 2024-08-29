@@ -1,0 +1,3 @@
+resources:
+  - producer-deployment.yaml
+  - consumer-deployment.yaml
