@@ -1,0 +1,44 @@
+name: PUBSUB CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Login to AWS ECR
+        run: |
+          aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | docker login --username AWS --password-stdin ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: ${{ secrets.AWS_REGION }}
+
+      - name: Build Consumer Docker Image And Push To ECR
+        run: |
+          docker build \
+            --build-arg AWS_ACCESS_KEY=${{ secrets.AWS_ACCESS_KEY }} \
+            --build-arg AWS_SECRET_KEY=${{ secrets.AWS_SECRET_KEY }} \
+            --build-arg SNS_TOPIC=${{ secrets.SNS_TOPIC }} \
+            --build-arg SQS_URL=${{ secrets.SQS_URL }} \
+            --build-arg AWS_REGION=${{ secrets.AWS_REGION }} \
+            -t ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/consumer:latest ./subscriber
+          docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/consumer:latest
+
+      - name: Build Producer Docker Image And Push To ECR
+        run: |
+          docker build \
+            --build-arg AWS_ACCESS_KEY=${{ secrets.AWS_ACCESS_KEY }} \
+            --build-arg AWS_SECRET_KEY=${{ secrets.AWS_SECRET_KEY }} \
+            --build-arg SNS_TOPIC=${{ secrets.SNS_TOPIC }} \
+            --build-arg SQS_URL=${{ secrets.SQS_URL }} \
+            --build-arg AWS_REGION=${{ secrets.AWS_REGION }} \
+            -t ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/producer:latest ./producer
+          docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/producer:latest
