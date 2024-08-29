@@ -100,11 +100,13 @@ jobs:
         run: |
           curl -o kubectl https://amazon-eks.s3.us-west-2.amazonaws.com/1.19.6/2021-01-05/bin/linux/amd64/kubectl
           chmod +x ./kubectl
-          sudo mv ./kubectl /usr/local/bin
 
       - name: Update kubeconfig for EKS cluster
         run: |
-          aws eks update-kubeconfig --region ${{ secrets.AWS_REGION }} --name pubsub-cluster
+          ./kubectl config set-cluster pubsub-cluster --server=https://${{ secrets.EKS_CLUSTER_ENDPOINT }} --certificate-authority=${{ secrets.CA_CERTIFICATE }}
+          ./kubectl config set-credentials aws --access-token=${{ secrets.AWS_ACCESS_KEY }}
+          ./kubectl config set-context pubsub-cluster --cluster=pubsub-cluster --user=aws
+          ./kubectl config use-context pubsub-cluster
 
       - name: List directory contents
         run: |
@@ -112,4 +114,4 @@ jobs:
 
       - name: Deploy Producer to EKS
         run: |
-          kubectl apply -k ./infra/
+          ./kubectl apply -k ./infra/
