@@ -101,7 +101,7 @@ jobs:
           eksctl create cluster \
           --name pubsub-cluster \
           --region ${{ secrets.AWS_REGION }} \
-          --version 1.21 \
+          --version 1.30 \
           --nodegroup-name ng-default \
           --node-type t3.small \
           --nodes 2 \
