@@ -80,6 +80,11 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
 
+      - name: Install eksctl
+        run: |
+          curl --silent --location "https://github.com/eksctl/eksctl/releases/download/v0.110.0/eksctl_Linux_amd64.tar.gz" | tar xz -C /tmp
+          sudo mv /tmp/eksctl /usr/local/bin
+
       - name: Create EKS Cluster
         run: |
           eksctl create cluster \

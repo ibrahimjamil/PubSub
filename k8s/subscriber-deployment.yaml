@@ -15,6 +15,3 @@ spec:
       containers:
         - name: subscriber
           image: 182399717212.dkr.ecr.us-east-1.amazonaws.com/subscriber #ibrahimjamil/subscriber:latest
-          envFrom:
-            - secretRef:
-                name: subscriber-secret
