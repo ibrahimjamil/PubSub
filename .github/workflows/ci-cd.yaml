@@ -36,8 +36,8 @@ jobs:
             --build-arg SNS_TOPIC=${{ secrets.SNS_TOPIC }} \
             --build-arg SQS_URL=${{ secrets.SQS_URL }} \
             --build-arg AWS_REGION=${{ secrets.AWS_REGION }} \
-            -t ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/consumer:latest ./subscriber
-          docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/consumer:latest
+            -t ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/subscriber:latest ./subscriber
+          docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/subscriber:latest
 
       - name: Build Producer Docker Image And Push To ECR
         run: |
