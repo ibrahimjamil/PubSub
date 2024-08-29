@@ -108,7 +108,7 @@ jobs:
 
       - name: List directory contents
         run: |
-          ls -R ./infra/
+          ls -R ./
 
       - name: Deploy Producer to EKS
         run: |
