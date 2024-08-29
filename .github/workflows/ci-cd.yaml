@@ -103,10 +103,7 @@ jobs:
 
       - name: Update kubeconfig for EKS cluster
         run: |
-          ./kubectl config set-cluster pubsub-cluster --server=https://${{ secrets.EKS_CLUSTER_ENDPOINT }} --certificate-authority=${{ secrets.CA_CERTIFICATE }}
-          ./kubectl config set-credentials aws --access-token=${{ secrets.AWS_ACCESS_KEY }}
-          ./kubectl config set-context pubsub-cluster --cluster=pubsub-cluster --user=aws
-          ./kubectl config use-context pubsub-cluster
+          aws eks update-kubeconfig --region ${{ secrets.AWS_REGION }} --name pubsub-cluster
 
       - name: List directory contents
         run: |
