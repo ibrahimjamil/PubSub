@@ -105,6 +105,17 @@ jobs:
           chmod +x ./kubectl
           sudo mv ./kubectl /usr/local/bin
 
+      - name: configure cluster
+        run: |
+          eksctl create cluster \
+          --name pubsub-cluster \
+          --region ${{ secrets.AWS_REGION }} \
+          --version 1.30 \
+          --nodegroup-name ng-default \
+          --node-type t3.small \
+          --nodes 2 \
+          --managed
+
       - name: Update kubeconfig for EKS cluster
         run: |
           aws eks update-kubeconfig --region ${{ secrets.AWS_REGION }} --name pubsub-cluster
